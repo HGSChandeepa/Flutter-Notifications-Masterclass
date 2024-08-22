@@ -1,5 +1,6 @@
 import 'package:f_notification/notification/notification.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:timezone/data/latest.dart' as tz;
 
 void main() async {
@@ -40,7 +41,7 @@ class _MyAppState extends State<MyApp> {
                     body: 'Notification Body',
                   );
                 },
-                child: const Text('Show Notification'),
+                child: const Text('Show instant notification'),
               ),
 
               //sheduled notification
@@ -57,8 +58,35 @@ class _MyAppState extends State<MyApp> {
                     scheduledDate: duration,
                   );
                 },
-                child: const Text('Show Notification'),
-              )
+                child: const Text('Show sheduled notification'),
+              ),
+
+              // Recurring Notification
+
+              ElevatedButton(
+                onPressed: () {
+                  NotificationService.showRecurringNotification(
+                    title: "this is scheduled notification",
+                    body: "hello from adomic arts ",
+                    day: Day.monday,
+                    time: DateTime.now(),
+                  );
+                },
+                child: const Text('Show Recurring Notification'),
+              ),
+
+              //Big Picture Notification
+
+              ElevatedButton(
+                onPressed: () {
+                  NotificationService.showBigPictureNotification(
+                    title: "this is scheduled notification",
+                    body: "hello from adomic arts ",
+                    imageUrl: "@mipmap/ic_launcher",
+                  );
+                },
+                child: const Text('Show  Big Picture Notification'),
+              ),
             ],
           ),
         ),

@@ -1,3 +1,4 @@
+import 'package:f_notification/utils/util_functions.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:timezone/timezone.dart' as tz;
 
@@ -110,5 +111,113 @@ class NotificationService {
           UILocalNotificationDateInterpretation.absoluteTime,
       matchDateTimeComponents: DateTimeComponents.time,
     );
+  }
+
+  // Recurring Notification
+
+  static Future<void> showRecurringNotification({
+    required String title,
+    required String body,
+    required DateTime time,
+    required Day day,
+  }) async {
+    //define the notification details
+    const NotificationDetails platformChannelSpecifics = NotificationDetails(
+      //define the android notification details
+      android: AndroidNotificationDetails(
+        "channel_Id",
+        "channel_Name",
+        importance: Importance.max,
+        priority: Priority.high,
+      ),
+
+      //define the ios notification details
+      iOS: DarwinNotificationDetails(
+        presentAlert: true,
+        presentBadge: true,
+        presentSound: true,
+      ),
+    );
+
+    //schedule the notification
+
+    await flutterLocalNotificationsPlugin.zonedSchedule(
+      0,
+      title,
+      body,
+      UtilFunctions().nextInstanceOfTime(time, day),
+      platformChannelSpecifics,
+      uiLocalNotificationDateInterpretation:
+          UILocalNotificationDateInterpretation.absoluteTime,
+      matchDateTimeComponents: DateTimeComponents.time,
+    );
+  }
+
+  //Big Picture Notification
+
+  static Future<void> showBigPictureNotification(
+      {required String title,
+      required String body,
+      required String imageUrl}) async {
+    //define the notification details
+    final BigPictureStyleInformation bigPictureStyleInformation =
+        BigPictureStyleInformation(
+      DrawableResourceAndroidBitmap(imageUrl),
+      largeIcon: DrawableResourceAndroidBitmap(imageUrl),
+      contentTitle: title,
+      summaryText: body,
+      htmlFormatContent: true,
+      htmlFormatContentTitle: true,
+    );
+
+    NotificationDetails platformChannelSpecifics = NotificationDetails(
+      //define the android notification details
+      android: AndroidNotificationDetails(
+        "channel_Id",
+        "channel_Name",
+        importance: Importance.max,
+        priority: Priority.high,
+        styleInformation: bigPictureStyleInformation,
+      ),
+
+      //define the ios notification details
+      iOS: DarwinNotificationDetails(
+        presentAlert: true,
+        presentBadge: true,
+        presentSound: true,
+        attachments: [DarwinNotificationAttachment(imageUrl)],
+      ),
+    );
+
+    //show the notification
+    await flutterLocalNotificationsPlugin.show(
+      0,
+      title,
+      body,
+      platformChannelSpecifics,
+    );
+  }
+
+  //Image notification
+  Future imageNotification() async {
+    var bigPicture = const BigPictureStyleInformation(
+        DrawableResourceAndroidBitmap("@mipmap/ic_launcher"),
+        largeIcon: DrawableResourceAndroidBitmap("@mipmap/ic_launcher"),
+        contentTitle: "Demo image notification",
+        summaryText: "This is some text",
+        htmlFormatContent: true,
+        htmlFormatContentTitle: true);
+
+    var android = AndroidNotificationDetails(
+      "id",
+      "channel",
+      styleInformation: bigPicture,
+    );
+
+    var platform = new NotificationDetails(android: android);
+
+    await flutterLocalNotificationsPlugin.show(
+        0, "Demo Image notification", "Tap to do something", platform,
+        payload: "Welcome to demo app");
   }
 }
