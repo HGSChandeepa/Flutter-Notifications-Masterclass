@@ -198,7 +198,7 @@ class NotificationService {
     );
   }
 
-  //Image notification
+  //Image notification ( same as big picture notification)
   Future imageNotification() async {
     var bigPicture = const BigPictureStyleInformation(
         DrawableResourceAndroidBitmap("@mipmap/ic_launcher"),
@@ -214,10 +214,31 @@ class NotificationService {
       styleInformation: bigPicture,
     );
 
-    var platform = new NotificationDetails(android: android);
+    var platform = NotificationDetails(android: android);
 
     await flutterLocalNotificationsPlugin.show(
         0, "Demo Image notification", "Tap to do something", platform,
         payload: "Welcome to demo app");
+  }
+
+  //Location-based Notification
+
+  // The Loation based notification requires some prerequisites such as,
+  // 1. The location package
+  // 2. The geoflutterfire package
+  // 3. The google_maps_flutter package
+
+  //this is the logic to show a location-based notification from theese packages I will not include any code here but i will explain the logic
+  // 1. Get the current location of the user
+  // 2. Get the location of the place you want to show the notification
+  // 3. Calculate the distance between the two locations
+  // 4. If the distance is less than a certain value show the notification
+
+  // we will implement this after we discuss the google maps section
+
+  //Cancel notification
+
+  Future cancelNotification() async {
+    await flutterLocalNotificationsPlugin.cancelAll();
   }
 }
