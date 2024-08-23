@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "262601454286",
+    "project_id": "task-app-ce5de",
+    "storage_bucket": "task-app-ce5de.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:262601454286:android:1ed42117be4ace5b01169f",
+        "android_client_info": {
+          "package_name": "com.example.f_notification"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCANwPmSou9Nqp5OvKZUp7kptbfYahttE8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:262601454286:android:008c1f0850430d7b01169f",
+        "android_client_info": {
+          "package_name": "com.example.firebase_and_flutter"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCANwPmSou9Nqp5OvKZUp7kptbfYahttE8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

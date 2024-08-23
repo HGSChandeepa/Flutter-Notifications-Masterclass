@@ -1,4 +1,6 @@
+import 'package:f_notification/firebase_options.dart';
 import 'package:f_notification/notification/notification.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:timezone/data/latest.dart' as tz;
@@ -8,6 +10,10 @@ void main() async {
   //initialize the notification service
   await NotificationService.init();
   tz.initializeTimeZones();
+
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 
