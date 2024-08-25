@@ -2,7 +2,7 @@ import 'package:f_notification/utils/util_functions.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:timezone/timezone.dart' as tz;
 
-class NotificationService {
+class LocalNotificationService {
   //create an instace of the flutter local notification plugin
   static final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
@@ -240,5 +240,40 @@ class NotificationService {
 
   Future cancelNotification() async {
     await flutterLocalNotificationsPlugin.cancelAll();
+  }
+
+  //show a notification (instant notification) with a payload
+
+  static Future<void> showInstantNotificationWithPayload({
+    required String title,
+    required String body,
+    required String payload,
+  }) async {
+    //define the notification details
+    const NotificationDetails platformChannelSpecifics = NotificationDetails(
+      //define the android notification details
+      android: AndroidNotificationDetails(
+        "channel_Id",
+        "channel_Name",
+        importance: Importance.max,
+        priority: Priority.high,
+      ),
+
+      //define the ios notification details
+      iOS: DarwinNotificationDetails(
+        presentAlert: true,
+        presentBadge: true,
+        presentSound: true,
+      ),
+    );
+
+    //show the notification
+    await flutterLocalNotificationsPlugin.show(
+      0,
+      title,
+      body,
+      platformChannelSpecifics,
+      payload: payload,
+    );
   }
 }
